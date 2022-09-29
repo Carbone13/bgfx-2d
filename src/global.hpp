@@ -15,8 +15,13 @@ struct Camera;
 
 struct Global
 {
+    // Application Window size
     const int WINDOW_HEIGHT = 1600;
     const int WINDOW_WIDTH = 900;
+
+    // Rendering screen size (in pixel)
+    const int SCREEN_HEIGHT = 16;
+    const int SCREEN_WIDTH = 9;
 
     Visual Visual;
     Input Input;
@@ -24,7 +29,7 @@ struct Global
     Camera Camera;
 
     Global () :
-            Visual{WINDOW_HEIGHT, WINDOW_WIDTH}, Input{Visual.getWindow()}, Loader{}, Camera{}
+            Visual{WINDOW_HEIGHT, WINDOW_WIDTH}, Input{Visual.getWindow()}, Loader{}, Camera{SCREEN_HEIGHT, SCREEN_WIDTH}
     {
     }
 };

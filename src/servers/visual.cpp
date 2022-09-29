@@ -40,9 +40,13 @@ Visual::Visual(int _w, int _h)
 
 void Visual::blit(Sprite sprite)
 {
-    global.Camera.prepare();
-
     bgfx::touch(0);
+
+    global.Camera.prepare();
+    auto model = glm::scale(glm::mat4(1.0f), glm::vec3(16.0f, 9.0f, 1.0f));
+
+    bgfx::setTransform(reinterpret_cast< void*>(&model));
+
     bgfx::setTexture(0, textureSampler, sprite.texture);
     bgfx::setVertexBuffer(0, sprite.vbh);
     bgfx::setIndexBuffer(sprite.ibh);

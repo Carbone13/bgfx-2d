@@ -15,5 +15,5 @@ Sprite::Sprite()
 
     shader = bgfx::createProgram(vs, fs, true);
 
-    texture = global.Loader.loadTexture("2x2.png", BGFX_SAMPLER_MAG_POINT);
+    texture = global.Loader.loadTexture("sprite.png", BGFX_SAMPLER_MAG_POINT);
 }

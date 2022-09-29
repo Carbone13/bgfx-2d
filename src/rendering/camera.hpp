@@ -10,6 +10,8 @@
 
 class Camera
 {
+    glm::vec2 screenSize {-1.0, -1.0f};
+
     glm::mat4 view {1.0f};
     glm::mat4 proj {1.0f};
 
@@ -26,17 +28,18 @@ public:
 
     void prepare ();
 
-    Camera ()
+    Camera (int width, int height)
     {
+        screenSize = glm::vec2(static_cast<float>(width), static_cast<float>(height));
         recalculate();
 
         proj = glm::ortho(
-                -16.0f / 2.0f
-                , (float)16.0f / 2.0f
-                , (float)9.0f / 2.0f
-                , -9.0f / 2.0f
-                , -1000.0f
-                , 1000.0f);
+                -screenSize.x / 2.0f,
+                +screenSize.x / 2.0f,
+                +screenSize.y / 2.0f,
+                -screenSize.y / 2.0f,
+                -1000.0f,
+                1000.0f);
     }
 };
 
