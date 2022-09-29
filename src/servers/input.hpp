@@ -14,6 +14,7 @@ public:
     }
 
     bool isKeyPressed(int key);
+    int getAxis (int keyA, int keyB);
 };
 
 #endif //BGFX_2D_INPUT_HPP

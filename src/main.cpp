@@ -31,7 +31,7 @@ void load ()
 
 }
 
-void update (double delta)
+void update (float delta)
 {
     glfwPollEvents();
 
@@ -39,4 +39,11 @@ void update (double delta)
     {
         glfwSetWindowShouldClose(global.Visual.getWindow(), 1);
     }
+
+    glm::vec2 input { global.Input.getAxis(GLFW_KEY_D, GLFW_KEY_A),
+                      global.Input.getAxis(GLFW_KEY_W, GLFW_KEY_S)};
+    if (input != glm::zero<glm::vec2>())
+        input = glm::normalize(input);
+
+    global.Camera.setPosition(global.Camera.getPosition() + 7.0f * delta * input);
 }

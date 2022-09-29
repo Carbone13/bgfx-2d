@@ -15,13 +15,16 @@ struct Camera;
 
 struct Global
 {
+    const int WINDOW_HEIGHT = 1600;
+    const int WINDOW_WIDTH = 900;
+
     Visual Visual;
     Input Input;
     Loader Loader;
     Camera Camera;
 
     Global () :
-            Visual{1600, 900}, Input{Visual.getWindow()}, Loader{}, Camera{}
+            Visual{WINDOW_HEIGHT, WINDOW_WIDTH}, Input{Visual.getWindow()}, Loader{}, Camera{}
     {
     }
 };

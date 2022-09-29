@@ -7,13 +7,13 @@
 
 class Visual
 {
-    GLFWwindow *window;
-    bgfx::UniformHandle textureSampler;
+    GLFWwindow *window = nullptr;
+    bgfx::UniformHandle textureSampler {};
 
-    int width;
-    int height;
+    int width {-1};
+    int height {-1};
 
-    bgfx::VertexLayout vertexLayout;
+    bgfx::VertexLayout vertexLayout {};
 
 public:
     Visual (int _w, int _h);
