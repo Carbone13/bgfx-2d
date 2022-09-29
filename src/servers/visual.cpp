@@ -3,12 +3,7 @@
 #include "visual.hpp"
 #include "bgfx/bgfx.h"
 #include "GLFW/glfw3native.h"
-#include "bx/math.h"
-
-#include <glm/glm.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/matrix_clip_space.hpp>
-#include <glm/ext/scalar_constants.hpp>
+#include "global.hpp"
 
 Visual::Visual(int _w, int _h)
 {
@@ -45,34 +40,12 @@ Visual::Visual(int _w, int _h)
 
 void Visual::blit(Sprite sprite)
 {
+    global.Camera.prepare();
+
     bgfx::touch(0);
-
-    float proj[16];
-    bx::mtxOrtho(
-            proj
-            , -16.0f / 2.0
-            , (float)16.0 / 2.0
-            , (float)9.0 / 2.0
-            , -9.0f / 2.0
-            , -1000.0f
-            , 1000.0f
-            , 0.0f
-            , bgfx::getCaps()->homogeneousDepth
-    );
-
-    bgfx::setViewTransform(0, nullptr, proj);
-
-    bgfx::setViewRect(0, 0, 0,
-                      1600,
-                      900);
-
     bgfx::setTexture(0, textureSampler, sprite.texture);
-
-
     bgfx::setVertexBuffer(0, sprite.vbh);
     bgfx::setIndexBuffer(sprite.ibh);
-
     bgfx::setState(BGFX_STATE_DEFAULT);
-
     bgfx::submit(0, sprite.shader);
 }
