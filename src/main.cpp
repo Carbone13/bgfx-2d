@@ -15,6 +15,7 @@ Global &global = globalState;
 Sprite sprite { "res/sprite.png"};
 Sprite twoTwo {"res/2x2.png"};
 Sprite empty {};
+Sprite atlas {"res/atlas.png", 0, 0, 6, 4};
 
 int main ()
 {
@@ -30,9 +31,7 @@ int main ()
         debug(delta);
         update(delta);
 
-
-        global.Visual.blit(sprite);
-        global.Visual.blit(twoTwo);
+        global.Visual.blit(atlas);
 
         global.Visual.process();
         bgfx::frame();

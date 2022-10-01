@@ -94,13 +94,17 @@ void Visual::process ()
         // scale
         *mtx = glm::scale(*mtx, glm::vec3(sprite.scale, 1.0f));
 
+        auto* textureID = (float*)&data[64];
+        textureID[0] = sprite.begin.x;
+        textureID[1] = sprite.begin.y;
+        textureID[2] = sprite.size.x;
+        textureID[3] = sprite.size.y;
+
         data += instanceStride;
 
         // Set texture
     bgfx::setTexture(0, textureSampler, sprite.texture);
     }
-
-
 
     // Set vertex and index buffer.
     bgfx::setVertexBuffer(0, vbh);

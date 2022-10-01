@@ -5,7 +5,6 @@
 #include "bgfx/bgfx.h"
 #include "glm/glm.hpp"
 
-// TODO auto calculate a model matrix, depending on the texture size
 class Sprite
 {
 public:
@@ -16,8 +15,12 @@ public:
 
     Sprite ()= default;
     explicit Sprite(const char *filePath);
+    explicit Sprite(const char *filePath, int x, int y, int width, int height);
 
     bgfx::TextureHandle texture {};
+    int textureID {0};
+    glm::vec2 begin {0.0f};
+    glm::vec2 size {1.0f};
 };
 
 #endif //BGFX_2D_SPRITE_HPP

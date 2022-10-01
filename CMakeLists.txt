@@ -21,7 +21,7 @@ add_executable(bgfx_2d
         src/rendering/sprite.cpp src/rendering/sprite.hpp
         src/rendering/vertex.hpp
         src/servers/loader.cpp src/servers/loader.hpp
-        src/rendering/camera.cpp src/rendering/camera.hpp)
+        src/rendering/camera.cpp src/rendering/camera.hpp src/rendering/texture_atlas.hpp)
 
 # Links libraries
 target_link_directories(bgfx_2d PRIVATE "lib/bgfx/.build/")

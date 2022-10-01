@@ -67,7 +67,19 @@ bgfx::TextureHandle Loader::loadTexture(bx::FileReaderI* _reader, const char* _f
 
             unload(data);
 
-            if (bgfx::isTextureValid(0, false, imageContainer->m_numLayers, bgfx::TextureFormat::Enum(imageContainer->m_format), _flags) )
+            if (1 < imageContainer->m_depth)
+            {
+                handle = bgfx::createTexture3D(
+                        uint16_t(imageContainer->m_width)
+                        , uint16_t(imageContainer->m_height)
+                        , uint16_t(imageContainer->m_depth)
+                        , 1 < imageContainer->m_numMips
+                        , bgfx::TextureFormat::Enum(imageContainer->m_format)
+                        , _flags
+                        , mem
+                );
+            }
+            else if (bgfx::isTextureValid(0, false, imageContainer->m_numLayers, bgfx::TextureFormat::Enum(imageContainer->m_format), _flags) )
             {
                 handle = bgfx::createTexture2D(
                         uint16_t(imageContainer->m_width)

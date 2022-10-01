@@ -8,7 +8,7 @@
 
 class Visual
 {
-    const uint16_t instanceStride = 64;
+    const uint16_t instanceStride = 80;
     std::vector<Sprite> queuedSprites;
 
     GLFWwindow *window = nullptr;
@@ -22,7 +22,6 @@ class Visual
     bgfx::IndexBufferHandle ibh {};
 
     bgfx::ProgramHandle program {};
-
 public:
     Visual (int _w, int _h);
 
