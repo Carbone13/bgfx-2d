@@ -1,4 +1,8 @@
 #include <iostream>
+#include <string>
+#include <iomanip>
+#include <vector>
+
 #include "main.hpp"
 #include "global.hpp"
 
@@ -19,11 +23,36 @@ int main ()
     {
         double delta = glfwGetTime() - lastTime;
         lastTime = glfwGetTime();
+
+        debug(delta);
         update(delta);
         global.Visual.blit(sprite);
 
+        global.Visual.process();
         bgfx::frame();
     }
+}
+
+void debug (double delta)
+{
+    std::vector<std::pair<std::string, double>> times = {
+            { "FRAME: ", delta },
+            { "DRAW: ", bgfx::getStats()->gpuTimeEnd }
+    };
+
+    int y = 0;
+    for (const auto &[s, t] : times) {
+        auto str =
+                std::stringstream() << s
+                                    << std::fixed << std::setprecision(3)
+                                    << delta << " ms";
+        bgfx::dbgTextPrintf(0, y, ((0x2 + y) << 4) | 0xF, str.str().c_str());
+        y++;
+    }
+
+    auto str =
+            std::stringstream() << "DRAW CALL: " << bgfx::getStats()->numDraw;
+    bgfx::dbgTextPrintf(0, y, ((0x2 + 4) << 4) | 0xF, str.str().c_str());
 }
 
 void load ()

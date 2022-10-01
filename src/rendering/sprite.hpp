@@ -3,35 +3,19 @@
 
 #include "vertex.hpp"
 #include "bgfx/bgfx.h"
+#include "glm/glm.hpp"
 
+// TODO auto calculate a model matrix, depending on the texture size
 class Sprite
 {
-    const Vertex vertices[4]
-    {
-                     // pos           // tex
-        Vertex{0.0f, 1.0f, 0, 0x7fff},
-        Vertex{1.0f, 0.0f, 0x7fff, 0},
-        Vertex{0.0f, 0.0f, 0, 0},
-        Vertex{1.0f, 1.0f, 0x7fff, 0x7fff},
-    };
-
-    const uint16_t indices[6]
-    {
-        0, 1, 2,
-        0, 3, 1
-    };
-
 public:
+    glm::vec2 position {0.0f};
+    glm::vec2 scale { 8.0f, 4.5f};
+    float rotation {45};
 
     Sprite();
 
-    bgfx::VertexBufferHandle vbh {};
-    bgfx::IndexBufferHandle ibh {};
     bgfx::TextureHandle texture {};
-
-    bgfx::ShaderHandle vs {};
-    bgfx::ShaderHandle fs {};
-    bgfx::ProgramHandle shader {};
 };
 
 #endif //BGFX_2D_SPRITE_HPP
