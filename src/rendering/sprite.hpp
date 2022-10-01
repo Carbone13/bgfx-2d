@@ -9,11 +9,13 @@
 class Sprite
 {
 public:
-    glm::vec2 position {0.0f};
-    glm::vec2 scale { 8.0f, 4.5f};
-    float rotation {45};
 
-    Sprite();
+    glm::vec2 position {0.0f};
+    glm::vec2 scale {1.0f};
+    float rotation {0.0f};
+
+    Sprite ()= default;
+    explicit Sprite(const char *filePath);
 
     bgfx::TextureHandle texture {};
 };

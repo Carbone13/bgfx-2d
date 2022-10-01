@@ -5,27 +5,27 @@
 #include "bgfx/bgfx.h"
 #include "GLFW/glfw3native.h"
 #include "global.hpp"
-#include "shaders/color.hpp"
-#include <glm/gtc/type_ptr.hpp>
+
+#include "_compiled/shaders/sprite/sprite.fs.hpp"
+#include "_compiled/shaders/sprite/sprite.vs.hpp"
+
 const Vertex vertices[4]
-        {
-                // pos           // tex
-                Vertex{0.0f, 1.0f, 0, 0x7fff},
-                Vertex{1.0f, 0.0f, 0x7fff, 0},
-                Vertex{0.0f, 0.0f, 0, 0},
-                Vertex{1.0f, 1.0f, 0x7fff, 0x7fff},
-        };
+{
+                 // pos           // tex
+    Vertex{0.0f, 1.0f, 0, 0x7fff},
+    Vertex{1.0f, 0.0f, 0x7fff, 0},
+    Vertex{0.0f, 0.0f, 0, 0},
+    Vertex{1.0f, 1.0f, 0x7fff, 0x7fff},
+};
 
 const uint16_t indices[6]
-        {
-                0, 1, 2,
-                0, 3, 1
-        };
+{
+    0, 1, 2,
+    0, 3, 1
+};
 
 Visual::Visual(int _w, int _h)
 {
-
-
     width = _w;
     height = _h;
 
@@ -61,8 +61,8 @@ Visual::Visual(int _w, int _h)
 
     ibh = bgfx::createIndexBuffer(bgfx::makeRef(indices, sizeof(indices)));
 
-    auto vs = bgfx::createShader(bgfx::makeRef(color_vs, sizeof(color_vs)));
-    auto fs = bgfx::createShader(bgfx::makeRef(color_fs, sizeof(color_fs)));
+    auto vs = bgfx::createShader(bgfx::makeRef(sprite_vs, sizeof(sprite_vs)));
+    auto fs = bgfx::createShader(bgfx::makeRef(sprite_fs, sizeof(sprite_fs)));
 
     program = bgfx::createProgram(vs, fs, true);
 }
@@ -72,9 +72,7 @@ void Visual::blit(Sprite sprite)
     queuedSprites.push_back(sprite);
 }
 
-// TODO refactor sprite, or just make blit take a texture and a transform
-// check if multiple rendering work
-
+// TODO check if multiple rendering work
 void Visual::process ()
 {
     global.Camera.prepare();
@@ -87,21 +85,22 @@ void Visual::process ()
     {
         auto* mtx = (glm::mat4x4*)(float*)data;
 
-        *mtx = glm::mat4x4{1.0f};
-
-        *mtx = glm::translate(*mtx, glm::vec3(sprite.position, 0.0f));
-
+        // translate
+        *mtx = glm::translate(glm::mat4x4{1.0f}, glm::vec3(sprite.position, 0.0f));
+        // rotate (centered pivot)
         *mtx = glm::translate(*mtx, glm::vec3(0.5f * sprite.scale.x, 0.5f * sprite.scale.y, 0.0f));
         *mtx = glm::rotate(*mtx, glm::radians(sprite.rotation), glm::vec3(0.0f, 0.0f, 1.0f));
         *mtx = glm::translate(*mtx, glm::vec3(-0.5f * sprite.scale.x, -0.5f * sprite.scale.y, 0.0f));
-
+        // scale
         *mtx = glm::scale(*mtx, glm::vec3(sprite.scale, 1.0f));
 
         data += instanceStride;
 
         // Set texture
-        bgfx::setTexture(0, textureSampler, sprite.texture);
+    bgfx::setTexture(0, textureSampler, sprite.texture);
     }
+
+
 
     // Set vertex and index buffer.
     bgfx::setVertexBuffer(0, vbh);

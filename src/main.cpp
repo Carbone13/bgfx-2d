@@ -12,12 +12,15 @@
 static Global globalState;
 Global &global = globalState;
 
-Sprite sprite {};
+Sprite sprite { "res/sprite.png"};
+Sprite twoTwo {"res/2x2.png"};
+Sprite empty {};
 
 int main ()
 {
     load();
 
+    twoTwo.position = glm::vec2(-4.0f, 2.0f);
     double lastTime = glfwGetTime();
     while(!glfwWindowShouldClose(global.Visual.getWindow()))
     {
@@ -26,7 +29,10 @@ int main ()
 
         debug(delta);
         update(delta);
+
+
         global.Visual.blit(sprite);
+        global.Visual.blit(twoTwo);
 
         global.Visual.process();
         bgfx::frame();
